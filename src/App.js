@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";  // Update import
 
-function App() {
+import SearchBar from './components/SearchBar';  // Importing SearchBar
+import Page from './components/Page';  // Importing WikipediaPage
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>  {/* Use Routes instead of Switch */}
+        <Route path="/" element={<SearchBar />} />  {/* Updated to use element prop */}
+        <Route path="/page/:title" element={<Page />} />  {/* Updated to use element prop */}
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
