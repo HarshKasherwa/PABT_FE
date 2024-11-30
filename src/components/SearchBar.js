@@ -1,14 +1,22 @@
 import React, { useState, useEffect, useCallback } from "react";
-import debounce from "lodash.debounce"; // Install lodash for utility functions
-import { TextField, List, ListItem, ListItemText, ListItemAvatar, Avatar, CircularProgress } from "@mui/material";
+import debounce from "lodash.debounce"; // Install lodash for debounce
+import {
+  TextField,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  CircularProgress,
+} from "@mui/material";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import { useNavigate } from "react-router-dom"; // For programmatic navigation
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -42,16 +50,15 @@ const SearchBar = () => {
     };
   }, [debouncedFetchResults]);
 
-  // Navigate to the Wikipedia page in your app
   const handleItemClick = (title) => {
-    navigate(`/page/${title}`); // Navigate to the page route
+    navigate(`/page/${title}`); // Redirect to the article page
   };
 
   return (
-    <div style={{ width: "100%", maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
+    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
       <TextField
         fullWidth
-        label="Search"
+        label="Search Wikipedia"
         variant="outlined"
         value={query}
         onChange={handleSearch}
@@ -61,26 +68,25 @@ const SearchBar = () => {
       <List>
         {results.map((page) => {
           const displayTitle = page.title;
-          const articleDescription = page.description ?? "A Wikipedia article"; // Fallback to default description
-          const thumbnailUrl =
-            page.thumbnail?.url
-              ? `https:${page.thumbnail.url}`
-              : "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/200px-Wikipedia-logo-v2.svg.png"; // Fallback to Wikipedia logo
+          const articleDescription = page.description || "A Wikipedia article";
+          const thumbnailUrl = page.thumbnail?.url
+            ? `https:${page.thumbnail.url}`
+            : "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/200px-Wikipedia-logo-v2.svg.png"; // Fallback thumbnail
 
           return (
             <ListItem
               key={page.id}
               button
-              onClick={() => handleItemClick(page.title)} // Use the click handler to navigate to the page
+              onClick={() => handleItemClick(page.title)}
             >
               <ListItemAvatar>
                 <Avatar
                   src={thumbnailUrl}
                   alt={displayTitle}
-                  variant="square" // Makes the Avatar square
+                  variant="square"
                   sx={{
-                    width: 40, // Set desired width
-                    height: 40, // Set the same value for height
+                    width: 40,
+                    height: 40,
                   }}
                 />
               </ListItemAvatar>

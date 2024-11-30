@@ -1,16 +1,22 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";  // Update import
-
-import SearchBar from './components/SearchBar';  // Importing SearchBar
-import Page from './components/Page';  // Importing WikipediaPage
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import ArticlePage from "./pages/ArticlePage";
+import SavedArticles from "./pages/SavedArticles";
+import LoginPage from "./pages/LoginPage"; // Import the LoginPage
+import Layout from "./layouts/Layout"; // The layout component remains unchanged
 
 const App = () => {
   return (
     <Router>
-      <Routes>  {/* Use Routes instead of Switch */}
-        <Route path="/" element={<SearchBar />} />  {/* Updated to use element prop */}
-        <Route path="/page/:title" element={<Page />} />  {/* Updated to use element prop */}
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/page/:title" element={<ArticlePage />} />
+          <Route path="/login" element={<LoginPage />} /> {/* Add LoginPage route */}
+          <Route path="/saved-articles" element={<SavedArticles />} />
+        </Routes>
+      </Layout>
     </Router>
   );
 };
