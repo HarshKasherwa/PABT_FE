@@ -1,28 +1,26 @@
 import React, { useState } from "react";
 import { TextField, Button, CircularProgress, Box, Paper, Typography } from "@mui/material";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Import Link
 
-const LoginPage = () => {
+const SignupPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleSignup = async () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/login?username=${username}&password=${password}`,
+        `${process.env.REACT_APP_API_URL}/signup?username=${username}&password=${password}`,
       );
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.access_token);
-        localStorage.setItem("isLoggedIn", "true");
-        navigate("/");
-        window.location.reload(); // Reload the page to update the header
+        alert("Signup successful! Please log in.");
+        navigate("/login");
       }
     } catch (error) {
-      alert("Login Failed: Invalid credentials");
+      alert("Signup Failed: " + error.response.data.detail);
     } finally {
       setLoading(false);
     }
@@ -36,7 +34,7 @@ const LoginPage = () => {
       minHeight="50vh"
     >
       <Paper elevation={3} style={{ padding: "20px", maxWidth: "400px", width: "100%" }}>
-        <h3 style={{ textAlign: "center" }}>Login</h3>
+        <h3 style={{ textAlign: "center" }}>Sign Up</h3>
         <TextField
           label="Username"
           value={username}
@@ -57,18 +55,18 @@ const LoginPage = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={handleLogin}
+          onClick={handleSignup}
           disabled={loading}
           fullWidth
         >
-          {loading ? <CircularProgress size={24} /> : "Login"}
+          {loading ? <CircularProgress size={24} /> : "Sign Up"}
         </Button>
         <Typography style={{ marginTop: "20px", textAlign: "center" }}>
-          Don't have an account? <Link to="/signup">Sign up</Link>
+          Already have an account? <Link to="/login"> Log in </Link>
         </Typography>
       </Paper>
     </Box>
   );
 };
 
-export default LoginPage;
+export default SignupPage;

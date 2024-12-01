@@ -23,7 +23,7 @@ const SearchBar = () => {
   const fetchResults = async (searchQuery) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${apiUrl}/search2?keyword=${searchQuery}`);
+      const response = await axios.get(`${apiUrl}/search_wikipedia?keyword=${searchQuery}`);
       setResults(response.data.pages || []);
     } catch (error) {
       console.error("Error fetching search results:", error);
@@ -58,7 +58,7 @@ const SearchBar = () => {
     <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
       <TextField
         fullWidth
-        label="Search Wikipedia"
+        label="Search Wikipedia Articles"
         variant="outlined"
         value={query}
         onChange={handleSearch}

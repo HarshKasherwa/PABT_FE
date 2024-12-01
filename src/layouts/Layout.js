@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 
 const Layout = ({ children }) => {
-  const user = null; // Simulate user state
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Simulate fetching user data with the token
+      setUser({ name: "User", avatar: "/path/to/avatar.jpg" });
+    }
+  }, []);
 
   const handleLogin = () => {
-    console.log("Login Clicked!");
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Simulate fetching user data with the token
+      setUser({ name: "User", avatar: "/path/to/avatar.jpg" });
+    }
   };
 
   const handleLogout = () => {
-    console.log("Logout Clicked!");
+    localStorage.removeItem("token");
+    localStorage.removeItem("isLoggedIn");
+    setUser(null);
   };
 
   return (
