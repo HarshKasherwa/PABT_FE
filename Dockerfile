@@ -13,7 +13,7 @@ RUN node -v && npm -v
 
 RUN pwd
 
-COPY ./frontend .
+COPY . .
 RUN rm package-lock.json
 
 RUN ls -l

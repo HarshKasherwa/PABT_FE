@@ -11,7 +11,7 @@ fi
 
 
 echo "********* STARTING REACT UI APP *********"
-npm run dev
+npm start
 
 # Keep the script running
 tail -f /dev/null
